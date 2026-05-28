@@ -1,0 +1,769 @@
+USE [master]
+GO
+/****** Object:  Database [DistribuidoraBebidasDB]    Script Date: 5/19/2026 10:09:42 PM ******/
+CREATE DATABASE [DistribuidoraBebidasDB]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DistribuidoraBebidasDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL17.SQLEXPRESS\MSSQL\DATA\DistribuidoraBebidasDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'DistribuidoraBebidasDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL17.SQLEXPRESS\MSSQL\DATA\DistribuidoraBebidasDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET COMPATIBILITY_LEVEL = 170
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [DistribuidoraBebidasDB].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET  MULTI_USER 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET OPTIMIZED_LOCKING = OFF 
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [DistribuidoraBebidasDB]
+GO
+/****** Object:  Table [dbo].[Categorias]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categorias](
+	[IdCategoria] [int] IDENTITY(1,1) NOT NULL,
+	[NombreCategoria] [varchar](100) NOT NULL,
+	[Descripcion] [varchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdCategoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[NombreCategoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Clientes]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Clientes](
+	[IdCliente] [int] IDENTITY(1,1) NOT NULL,
+	[NombreCliente] [varchar](150) NOT NULL,
+	[Cuit] [varchar](20) NOT NULL,
+	[Telefono] [varchar](30) NULL,
+	[Email] [varchar](150) NULL,
+	[Direccion] [varchar](200) NULL,
+	[Ciudad] [varchar](100) NULL,
+	[Activo] [bit] NOT NULL,
+	[FechaAlta] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Cuit] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetallePedidos]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetallePedidos](
+	[IdDetallePedido] [int] IDENTITY(1,1) NOT NULL,
+	[IdPedido] [int] NOT NULL,
+	[IdProducto] [int] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[PrecioUnitario] [decimal](10, 2) NOT NULL,
+	[Subtotal] [decimal](12, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdDetallePedido] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Entregas]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Entregas](
+	[IdEntrega] [int] IDENTITY(1,1) NOT NULL,
+	[IdPedido] [int] NOT NULL,
+	[IdRepartidor] [int] NOT NULL,
+	[FechaAsignacion] [datetime] NOT NULL,
+	[FechaEntrega] [datetime] NULL,
+	[EstadoEntrega] [varchar](50) NOT NULL,
+	[Observaciones] [varchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdEntrega] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[IdPedido] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Marcas]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Marcas](
+	[IdMarca] [int] IDENTITY(1,1) NOT NULL,
+	[NombreMarca] [varchar](100) NOT NULL,
+	[Activo] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdMarca] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MovimientosStock]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MovimientosStock](
+	[IdMovimiento] [int] IDENTITY(1,1) NOT NULL,
+	[IdProducto] [int] NOT NULL,
+	[TipoMovimiento] [varchar](20) NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[FechaMovimiento] [datetime] NOT NULL,
+	[Motivo] [varchar](100) NULL,
+	[IdUsuario] [int] NOT NULL,
+	[Observacion] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdMovimiento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pedidos]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pedidos](
+	[IdPedido] [int] IDENTITY(1,1) NOT NULL,
+	[IdCliente] [int] NOT NULL,
+	[IdUsuario] [int] NOT NULL,
+	[FechaPedido] [datetime] NOT NULL,
+	[Estado] [varchar](50) NOT NULL,
+	[Total] [decimal](12, 2) NOT NULL,
+	[Observaciones] [varchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdPedido] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Presentaciones]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Presentaciones](
+	[IdPresentacion] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+	[Activo] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdPresentacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Productos]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Productos](
+	[IdProducto] [int] IDENTITY(1,1) NOT NULL,
+	[NombreProducto] [varchar](150) NOT NULL,
+	[Marca] [varchar](100) NULL,
+	[Presentacion] [varchar](100) NULL,
+	[Precio] [decimal](10, 2) NOT NULL,
+	[StockActual] [int] NOT NULL,
+	[StockMinimo] [int] NOT NULL,
+	[IdCategoria] [int] NOT NULL,
+	[IdProveedor] [int] NOT NULL,
+	[Activo] [bit] NOT NULL,
+	[FechaAlta] [datetime] NOT NULL,
+	[ImagenUrl] [varchar](300) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Proveedores]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Proveedores](
+	[IdProveedor] [int] IDENTITY(1,1) NOT NULL,
+	[RazonSocial] [varchar](150) NOT NULL,
+	[NombreContacto] [varchar](100) NULL,
+	[Telefono] [varchar](30) NULL,
+	[Email] [varchar](150) NULL,
+	[Direccion] [varchar](200) NULL,
+	[Activo] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdProveedor] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[IdRol] [int] IDENTITY(1,1) NOT NULL,
+	[NombreRol] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdRol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[NombreRol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Subcategorias]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Subcategorias](
+	[IdSubcategoria] [int] IDENTITY(1,1) NOT NULL,
+	[NombreSubcategoria] [varchar](100) NOT NULL,
+	[IdCategoria] [int] NOT NULL,
+	[Activo] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdSubcategoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuarios](
+	[IdUsuario] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](100) NOT NULL,
+	[Apellido] [varchar](100) NOT NULL,
+	[Email] [varchar](150) NOT NULL,
+	[PasswordHash] [varchar](255) NOT NULL,
+	[Telefono] [varchar](30) NULL,
+	[Activo] [bit] NOT NULL,
+	[IdRol] [int] NOT NULL,
+	[FechaCreacion] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdUsuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Clientes] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Clientes] ADD  DEFAULT (getdate()) FOR [FechaAlta]
+GO
+ALTER TABLE [dbo].[Entregas] ADD  DEFAULT (getdate()) FOR [FechaAsignacion]
+GO
+ALTER TABLE [dbo].[Entregas] ADD  DEFAULT ('Pendiente') FOR [EstadoEntrega]
+GO
+ALTER TABLE [dbo].[Marcas] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[MovimientosStock] ADD  DEFAULT (getdate()) FOR [FechaMovimiento]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT (getdate()) FOR [FechaPedido]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT ('Pendiente') FOR [Estado]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT ((0)) FOR [Total]
+GO
+ALTER TABLE [dbo].[Presentaciones] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Productos] ADD  DEFAULT ((0)) FOR [StockActual]
+GO
+ALTER TABLE [dbo].[Productos] ADD  DEFAULT ((0)) FOR [StockMinimo]
+GO
+ALTER TABLE [dbo].[Productos] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Productos] ADD  DEFAULT (getdate()) FOR [FechaAlta]
+GO
+ALTER TABLE [dbo].[Proveedores] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Subcategorias] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Usuarios] ADD  DEFAULT ((1)) FOR [Activo]
+GO
+ALTER TABLE [dbo].[Usuarios] ADD  DEFAULT (getdate()) FOR [FechaCreacion]
+GO
+ALTER TABLE [dbo].[DetallePedidos]  WITH CHECK ADD  CONSTRAINT [FK_DetallePedidos_Pedidos] FOREIGN KEY([IdPedido])
+REFERENCES [dbo].[Pedidos] ([IdPedido])
+GO
+ALTER TABLE [dbo].[DetallePedidos] CHECK CONSTRAINT [FK_DetallePedidos_Pedidos]
+GO
+ALTER TABLE [dbo].[DetallePedidos]  WITH CHECK ADD  CONSTRAINT [FK_DetallePedidos_Productos] FOREIGN KEY([IdProducto])
+REFERENCES [dbo].[Productos] ([IdProducto])
+GO
+ALTER TABLE [dbo].[DetallePedidos] CHECK CONSTRAINT [FK_DetallePedidos_Productos]
+GO
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [FK_Entregas_Pedidos] FOREIGN KEY([IdPedido])
+REFERENCES [dbo].[Pedidos] ([IdPedido])
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [FK_Entregas_Pedidos]
+GO
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [FK_Entregas_Usuarios] FOREIGN KEY([IdRepartidor])
+REFERENCES [dbo].[Usuarios] ([IdUsuario])
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [FK_Entregas_Usuarios]
+GO
+ALTER TABLE [dbo].[MovimientosStock]  WITH CHECK ADD  CONSTRAINT [FK_MovimientosStock_Productos] FOREIGN KEY([IdProducto])
+REFERENCES [dbo].[Productos] ([IdProducto])
+GO
+ALTER TABLE [dbo].[MovimientosStock] CHECK CONSTRAINT [FK_MovimientosStock_Productos]
+GO
+ALTER TABLE [dbo].[MovimientosStock]  WITH CHECK ADD  CONSTRAINT [FK_MovimientosStock_Usuarios] FOREIGN KEY([IdUsuario])
+REFERENCES [dbo].[Usuarios] ([IdUsuario])
+GO
+ALTER TABLE [dbo].[MovimientosStock] CHECK CONSTRAINT [FK_MovimientosStock_Usuarios]
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD  CONSTRAINT [FK_Pedidos_Clientes] FOREIGN KEY([IdCliente])
+REFERENCES [dbo].[Clientes] ([IdCliente])
+GO
+ALTER TABLE [dbo].[Pedidos] CHECK CONSTRAINT [FK_Pedidos_Clientes]
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD  CONSTRAINT [FK_Pedidos_Usuarios] FOREIGN KEY([IdUsuario])
+REFERENCES [dbo].[Usuarios] ([IdUsuario])
+GO
+ALTER TABLE [dbo].[Pedidos] CHECK CONSTRAINT [FK_Pedidos_Usuarios]
+GO
+ALTER TABLE [dbo].[Productos]  WITH CHECK ADD  CONSTRAINT [FK_Productos_Categorias] FOREIGN KEY([IdCategoria])
+REFERENCES [dbo].[Categorias] ([IdCategoria])
+GO
+ALTER TABLE [dbo].[Productos] CHECK CONSTRAINT [FK_Productos_Categorias]
+GO
+ALTER TABLE [dbo].[Productos]  WITH CHECK ADD  CONSTRAINT [FK_Productos_Proveedores] FOREIGN KEY([IdProveedor])
+REFERENCES [dbo].[Proveedores] ([IdProveedor])
+GO
+ALTER TABLE [dbo].[Productos] CHECK CONSTRAINT [FK_Productos_Proveedores]
+GO
+ALTER TABLE [dbo].[Subcategorias]  WITH CHECK ADD FOREIGN KEY([IdCategoria])
+REFERENCES [dbo].[Categorias] ([IdCategoria])
+GO
+ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD  CONSTRAINT [FK_Usuarios_Roles] FOREIGN KEY([IdRol])
+REFERENCES [dbo].[Roles] ([IdRol])
+GO
+ALTER TABLE [dbo].[Usuarios] CHECK CONSTRAINT [FK_Usuarios_Roles]
+GO
+ALTER TABLE [dbo].[DetallePedidos]  WITH CHECK ADD  CONSTRAINT [CK_DetallePedidos_Cantidad] CHECK  (([Cantidad]>(0)))
+GO
+ALTER TABLE [dbo].[DetallePedidos] CHECK CONSTRAINT [CK_DetallePedidos_Cantidad]
+GO
+ALTER TABLE [dbo].[DetallePedidos]  WITH CHECK ADD  CONSTRAINT [CK_DetallePedidos_Precio] CHECK  (([PrecioUnitario]>=(0)))
+GO
+ALTER TABLE [dbo].[DetallePedidos] CHECK CONSTRAINT [CK_DetallePedidos_Precio]
+GO
+ALTER TABLE [dbo].[DetallePedidos]  WITH CHECK ADD  CONSTRAINT [CK_DetallePedidos_Subtotal] CHECK  (([Subtotal]>=(0)))
+GO
+ALTER TABLE [dbo].[DetallePedidos] CHECK CONSTRAINT [CK_DetallePedidos_Subtotal]
+GO
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [CK_Entregas_Estado] CHECK  (([EstadoEntrega]='No entregado' OR [EstadoEntrega]='Entregado' OR [EstadoEntrega]='En camino' OR [EstadoEntrega]='Pendiente'))
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [CK_Entregas_Estado]
+GO
+ALTER TABLE [dbo].[MovimientosStock]  WITH CHECK ADD  CONSTRAINT [CK_MovimientosStock_Cantidad] CHECK  (([Cantidad]>(0)))
+GO
+ALTER TABLE [dbo].[MovimientosStock] CHECK CONSTRAINT [CK_MovimientosStock_Cantidad]
+GO
+ALTER TABLE [dbo].[MovimientosStock]  WITH CHECK ADD  CONSTRAINT [CK_MovimientosStock_Tipo] CHECK  (([TipoMovimiento]='Ajuste' OR [TipoMovimiento]='Salida' OR [TipoMovimiento]='Entrada'))
+GO
+ALTER TABLE [dbo].[MovimientosStock] CHECK CONSTRAINT [CK_MovimientosStock_Tipo]
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD  CONSTRAINT [CK_Pedidos_Estado] CHECK  (([Estado]='Cancelado' OR [Estado]='Confirmado' OR [Estado]='Borrador'))
+GO
+ALTER TABLE [dbo].[Pedidos] CHECK CONSTRAINT [CK_Pedidos_Estado]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_AgregarCliente]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_AgregarCliente]
+    @NombreCliente VARCHAR(150),
+    @Cuit VARCHAR(20),
+    @Telefono VARCHAR(30) = NULL,
+    @Email VARCHAR(150) = NULL,
+    @Direccion VARCHAR(200) = NULL,
+    @Ciudad VARCHAR(100) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM Clientes WHERE Cuit = @Cuit)
+    BEGIN
+        RAISERROR('Ya existe un cliente con ese CUIT.', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO Clientes (
+        NombreCliente,
+        Cuit,
+        Telefono,
+        Email,
+        Direccion,
+        Ciudad
+    )
+    VALUES (
+        @NombreCliente,
+        @Cuit,
+        @Telefono,
+        @Email,
+        @Direccion,
+        @Ciudad
+    );
+
+    SELECT 'Cliente agregado correctamente' AS Mensaje;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_AgregarDetallePedido]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_AgregarDetallePedido]
+    @IdPedido INT,
+    @IdProducto INT,
+    @Cantidad INT,
+    @IdUsuario INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Precio DECIMAL(10,2);
+    DECLARE @StockActual INT;
+
+    IF NOT EXISTS (SELECT 1 FROM Pedidos WHERE IdPedido = @IdPedido)
+    BEGIN
+        RAISERROR('El pedido no existe.', 16, 1);
+        RETURN;
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Productos WHERE IdProducto = @IdProducto)
+    BEGIN
+        RAISERROR('El producto no existe.', 16, 1);
+        RETURN;
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE IdUsuario = @IdUsuario)
+    BEGIN
+        RAISERROR('El usuario no existe.', 16, 1);
+        RETURN;
+    END
+
+    SELECT
+        @Precio = Precio,
+        @StockActual = StockActual
+    FROM Productos
+    WHERE IdProducto = @IdProducto;
+
+    IF @StockActual < @Cantidad
+    BEGIN
+        RAISERROR('No hay suficiente stock.', 16, 1);
+        RETURN;
+    END
+
+    IF EXISTS (
+        SELECT 1
+        FROM DetallePedidos
+        WHERE IdPedido = @IdPedido AND IdProducto = @IdProducto
+    )
+    BEGIN
+        UPDATE DetallePedidos
+        SET 
+            Cantidad = Cantidad + @Cantidad,
+            Subtotal = (Cantidad + @Cantidad) * PrecioUnitario
+        WHERE IdPedido = @IdPedido
+          AND IdProducto = @IdProducto;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO DetallePedidos (
+            IdPedido,
+            IdProducto,
+            Cantidad,
+            PrecioUnitario,
+            Subtotal
+        )
+        VALUES (
+            @IdPedido,
+            @IdProducto,
+            @Cantidad,
+            @Precio,
+            @Cantidad * @Precio
+        );
+    END
+
+    UPDATE Productos
+    SET StockActual = StockActual - @Cantidad
+    WHERE IdProducto = @IdProducto;
+
+    UPDATE Pedidos
+    SET Total = (
+        SELECT ISNULL(SUM(Subtotal), 0)
+        FROM DetallePedidos
+        WHERE IdPedido = @IdPedido
+    )
+    WHERE IdPedido = @IdPedido;
+
+    INSERT INTO MovimientosStock (
+        IdProducto,
+        TipoMovimiento,
+        Cantidad,
+        Motivo,
+        IdUsuario
+    )
+    VALUES (
+        @IdProducto,
+        'Salida',
+        @Cantidad,
+        'Salida por pedido N° ' + CAST(@IdPedido AS VARCHAR(20)),
+        @IdUsuario
+    );
+
+    SELECT 'Detalle procesado correctamente y movimiento registrado' AS Mensaje;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CrearPedido]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_CrearPedido]
+    @IdCliente INT,
+    @IdUsuario INT,
+    @Observaciones VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM Clientes WHERE IdCliente = @IdCliente)
+    BEGIN
+        RAISERROR('El cliente no existe.', 16, 1);
+        RETURN;
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE IdUsuario = @IdUsuario)
+    BEGIN
+        RAISERROR('El usuario no existe.', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO Pedidos (
+        IdCliente,
+        IdUsuario,
+        Observaciones
+    )
+    VALUES (
+        @IdCliente,
+        @IdUsuario,
+        @Observaciones
+    );
+
+    SELECT SCOPE_IDENTITY() AS IdPedidoCreado;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_ListarProductos]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_ListarProductos]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        p.IdProducto,
+        p.NombreProducto,
+        p.Marca,
+        p.Presentacion,
+        p.Precio,
+        p.StockActual,
+        p.StockMinimo,
+        c.NombreCategoria,
+        pr.RazonSocial AS Proveedor,
+        p.Activo,
+        p.FechaAlta
+    FROM Productos p
+    INNER JOIN Categorias c ON p.IdCategoria = c.IdCategoria
+    INNER JOIN Proveedores pr ON p.IdProveedor = pr.IdProveedor
+    ORDER BY p.NombreProducto;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_RegistrarMovimientoStock]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_RegistrarMovimientoStock]
+    @IdProducto INT,
+    @TipoMovimiento VARCHAR(20),
+    @Cantidad INT,
+    @Motivo VARCHAR(100),
+    @IdUsuario INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM Productos WHERE IdProducto = @IdProducto)
+    BEGIN
+        RAISERROR('El producto no existe.',16,1);
+        RETURN;
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE IdUsuario = @IdUsuario)
+    BEGIN
+        RAISERROR('El usuario no existe.',16,1);
+        RETURN;
+    END
+
+    INSERT INTO MovimientosStock (
+        IdProducto,
+        TipoMovimiento,
+        Cantidad,
+        Motivo,
+        IdUsuario
+    )
+    VALUES (
+        @IdProducto,
+        @TipoMovimiento,
+        @Cantidad,
+        @Motivo,
+        @IdUsuario
+    );
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_VerPedidoDetalle]    Script Date: 5/19/2026 10:09:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [dbo].[SP_VerPedidoDetalle]
+    @IdPedido INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        p.IdPedido,
+        c.NombreCliente,
+        u.Nombre AS Usuario,
+        p.FechaPedido,
+        p.Estado,
+        p.Total
+    FROM Pedidos p
+    INNER JOIN Clientes c ON p.IdCliente = c.IdCliente
+    INNER JOIN Usuarios u ON p.IdUsuario = u.IdUsuario
+    WHERE p.IdPedido = @IdPedido;
+
+    SELECT 
+        d.IdDetallePedido,
+        pr.NombreProducto,
+        d.Cantidad,
+        d.PrecioUnitario,
+        d.Subtotal
+    FROM DetallePedidos d
+    INNER JOIN Productos pr ON d.IdProducto = pr.IdProducto
+    WHERE d.IdPedido = @IdPedido;
+END
+GO
+USE [master]
+GO
+ALTER DATABASE [DistribuidoraBebidasDB] SET  READ_WRITE 
+GO
